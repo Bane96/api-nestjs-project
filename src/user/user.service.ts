@@ -1,13 +1,10 @@
-import { Injectable, Param } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../entity/user.entity';
-import { Repository } from 'typeorm';
-import {
-  IUpdateUserInterface,
-  IUserInterface,
-} from './interfaces/IUserInterface';
+import {Injectable} from '@nestjs/common';
+import {CreateUserDto} from './dto/create-user.dto';
+import {InjectRepository} from '@nestjs/typeorm';
+import {User} from '../entity/user.entity';
+import {Repository} from 'typeorm';
+import {UserRoleEnum} from "../enum/UserRoleEnum";
+import {UpdateUserDto} from "./dto/update-user.dto";
 
 @Injectable()
 export class UserService {
@@ -16,25 +13,24 @@ export class UserService {
   ) {}
 
   async createUser(createUserDto: CreateUserDto) {
-    console.log(createUserDto);
-    const newUser = await this.userRepository.create({
+    const newUser = this.userRepository.create({
+      role: UserRoleEnum.USER,
       ...createUserDto,
       createdAt: new Date(),
     });
-    console.log(newUser);
     return await this.userRepository.save(newUser);
   }
 
   findAll() {
-    return this.userRepository.find();
+    return this.userRepository.find({relations: ['home']});
   }
 
   findOne(id: number) {
-    this.userRepository.findBy({ id });
+   return  this.userRepository.findBy({ id });
   }
 
-  update(id: number, updateUserDetails: IUpdateUserInterface) {
-    return this.userRepository.update({ id }, { ...updateUserDetails });
+  update(id: number, updateUserDetails: UpdateUserDto) {
+    return this.userRepository.update({ id: id }, { ...updateUserDetails });
   }
 
   remove(id: number) {

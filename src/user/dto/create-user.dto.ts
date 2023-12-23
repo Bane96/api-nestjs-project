@@ -1,13 +1,52 @@
-import { UserRoleEnum } from "../../enum/UserRoleEnum";
+import {ApiProperty} from "@nestjs/swagger";
+import {IsNumber, IsOptional, IsString} from "class-validator";
+import {Home} from "../../entity/home.entity";
 
 export class CreateUserDto {
-  role: UserRoleEnum;
-  firstName: string;
-  lastName: string;
-  birthdate: string;
+  @ApiProperty()
   password: string;
+
+  @ApiProperty()
+  @IsOptional()
+  firstName: string;
+
+  @ApiProperty()
+  @IsString()
+  lastName: string;
+
+  @ApiProperty({pattern: '2021-12-30', example: '2021-12-30'})
+  @IsString()
+  birthdate: Date;
+
+  @ApiProperty({ pattern: '2021-12-30', example: '2021-12-30' })
+  @IsOptional()
+  deadDate: Date;
+
+  @ApiProperty({ pattern: '2021-12-30', example: '2021-12-30' })
+  @IsOptional()
+  weddingDate: Date;
+
+  @ApiProperty()
+  @IsString()
   gender: string;
+
+  @ApiProperty()
+  @IsString()
   city: string;
-  deadDate: string;
-  weddingDate: string;
+
+  @ApiProperty()
+  @IsNumber()
+  homeNumber: number;
+
+  @ApiProperty()
+  @IsString()
+  christianGlory: string;
+
+  @ApiProperty()
+  @IsString()
+  remark: string;
+
+  @ApiProperty()
+  @IsOptional()
+  home: Home;
 }

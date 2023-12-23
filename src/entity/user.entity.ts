@@ -1,23 +1,38 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 import { UserRoleEnum } from '../enum/UserRoleEnum';
+import {Home} from "./home.entity";
+import {Exclude} from "class-transformer";
 
 @Entity({ name: 'users' })
 export class User {
 
-  @PrimaryGeneratedColumn({ type: 'bigint'})
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: 'enum', enum: UserRoleEnum, default: UserRoleEnum.USER })
   role: UserRoleEnum;
 
+  @Column()
+  createdAt: Date;
+
+  @Exclude()
   @Column({ nullable: true })
   password: string;
 
-  @Column({ default: '' })
+  @Column({ nullable: true })
   firstName: string;
 
-  @Column({ default: '' })
+  @Column({ nullable: true })
   lastName: string;
+
+  @Column({ nullable: true })
+  birthdate: Date;
+
+  @Column({ nullable: true })
+  deadDate: Date;
+
+  @Column({ nullable: true })
+  weddingDate: Date;
 
   @Column({ nullable: true })
   gender: string;
@@ -25,15 +40,15 @@ export class User {
   @Column({ nullable: true })
   city: string;
 
-  @Column({ nullable: true })
-  birthdate: string;
+  @Column({nullable: true})
+  homeNumber: number;
 
-  @Column()
-  createdAt: Date;
+  @Column({nullable: true})
+  christianGlory: string;
 
-  @Column({ nullable: true })
-  deadDate: Date;
+  @Column({nullable: true})
+  remark: string;
 
-  @Column({ nullable: true })
-  weddingDate: Date;
+  @ManyToOne(() => Home, (home) => home.users)
+  home: Home
 }
