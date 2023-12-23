@@ -5,6 +5,7 @@ import {User} from '../entity/user.entity';
 import {Repository} from 'typeorm';
 import {UserRoleEnum} from "../enum/UserRoleEnum";
 import {UpdateUserDto} from "./dto/update-user.dto";
+import {FilterUserDto} from "./dto/filter-user";
 
 @Injectable()
 export class UserService {
@@ -21,12 +22,14 @@ export class UserService {
     return await this.userRepository.save(newUser);
   }
 
-  findAll() {
-    return this.userRepository.find({relations: ['home']});
+  findAll(
+      dto: FilterUserDto
+  ) {
+    return this.userRepository.find({relations: ['homes']});
   }
 
   findOne(id: number) {
-   return  this.userRepository.findBy({ id });
+   return this.userRepository.findBy({ id });
   }
 
   update(id: number, updateUserDetails: UpdateUserDto) {
