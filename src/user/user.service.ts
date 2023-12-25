@@ -24,7 +24,7 @@ export class UserService {
 
   findAll(
       dto: FilterUserDto
-  ) {
+  ): Promise<User[]> {
     return this.userRepository.find({relations: ['homes']});
   }
 
