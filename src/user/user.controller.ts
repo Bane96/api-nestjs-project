@@ -1,22 +1,37 @@
-import {Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query} from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+} from "@nestjs/common";
 import {UserService} from './user.service';
 import {CreateUserDto} from './dto/create-user.dto';
 import {UpdateUserDto} from './dto/update-user.dto';
-import {FilterUserDto} from "./dto/filter-user";
 import {User} from "../entity/user.entity";
+import {Pagination, PaginationParams} from "../common/service/pagination.service";
+import {Filtering, FilteringParams} from "../common/service/filter.service";
+import {IPaginatedResource} from "../common/types/IPaginationResource";
+import {Sorting, SortingParams} from "../common/service/sorting.service";
 
 @Controller('users')
-// @UseGuards(AuthGuard)
 export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
+  @HttpCode(HttpStatus.OK)
   async findAllUsers(
-  @Query()
-    dto: FilterUserDto
-
-  ) {
-    return await this.userService.findAll(dto);
+    @PaginationParams() paginationParams: Pagination,
+    @SortingParams(['name', 'id', 'stateId']) sort?: Sorting,
+    @FilteringParams(['name', 'id', 'stateId']) filter?: Filtering
+  ): Promise<IPaginatedResource<Partial<User>>> {
+    console.log(paginationParams)
+    return await this.userService.findAll(paginationParams, filter);
   }
 
   @Post()
