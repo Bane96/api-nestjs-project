@@ -15,7 +15,7 @@ import {CreateUserDto} from './dto/create-user.dto';
 import {UpdateUserDto} from './dto/update-user.dto';
 import {User} from "../entity/user.entity";
 import {Pagination, PaginationParams} from "../common/service/pagination.service";
-import {Filtering, FilteringParams} from "../common/service/filter.service";
+import {IFiltering, FilteringParams} from "../common/service/filter.service";
 import {IPaginatedResource} from "../common/types/IPaginationResource";
 import {Sorting, SortingParams} from "../common/service/sorting.service";
 
@@ -27,10 +27,9 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   async findAllUsers(
     @PaginationParams() paginationParams: Pagination,
-    @SortingParams(['name', 'id', 'stateId']) sort?: Sorting,
-    @FilteringParams(['name', 'id', 'stateId']) filter?: Filtering
+    @SortingParams([]) sort?: Sorting,
+    @FilteringParams(['firstName', 'id']) filter?: IFiltering
   ): Promise<IPaginatedResource<Partial<User>>> {
-    console.log(paginationParams)
     return await this.userService.findAll(paginationParams, filter);
   }
 

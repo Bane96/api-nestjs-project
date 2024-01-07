@@ -7,7 +7,7 @@ import {UserRoleEnum} from "../enum/UserRoleEnum";
 import {UpdateUserDto} from "./dto/update-user.dto";
 import {FilterUserDto} from "./dto/filter-user";
 import {Pagination} from "../common/service/pagination.service";
-import {Filtering} from "../common/service/filter.service";
+import {IFiltering} from "../common/service/filter.service";
 import {IPaginatedResource} from "../common/types/IPaginationResource";
 import {getOrder, getWhere} from "../common/helpers/typeorm.helper";
 import {Sorting} from "../common/service/sorting.service";
@@ -30,7 +30,7 @@ export class UserService {
 
     async findAll(
         {page, limit, size, offset}: Pagination,
-        filter?: Filtering,
+        filter?: IFiltering,
         sort?: Sorting
     ): Promise<IPaginatedResource<Partial<User>>> {
         const where = getWhere(filter);
@@ -44,7 +44,7 @@ export class UserService {
 
         return {
             totalItems: total,
-            items: users,
+            data: users,
             page,
             size
         };

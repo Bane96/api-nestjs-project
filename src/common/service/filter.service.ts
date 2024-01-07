@@ -2,17 +2,16 @@ import { BadRequestException, createParamDecorator, ExecutionContext } from '@ne
 import { Request } from 'express';
 import {FilterRule} from "../../enum/FilterRuleEnum";
 
-export interface Filtering {
+export interface IFiltering {
     property: string;
     rule: string;
     value: string;
 }
 
 // valid filter rules
-export const FilteringParams = createParamDecorator((data, ctx: ExecutionContext): Filtering => {
+export const FilteringParams = createParamDecorator((data, ctx: ExecutionContext): IFiltering => {
     const req: Request = ctx.switchToHttp().getRequest();
     const filter = req.query.filter as string;
-    console.log(filter)
     if (!filter) return null;
 
     // check if the valid params sent is an array

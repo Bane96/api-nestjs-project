@@ -24,6 +24,6 @@ export const PaginationParams = createParamDecorator((data, ctx: ExecutionContex
 
     // calculate pagination parameters
     const limit = size;
-    const offset = page * limit;
+    const offset = (page - 1) * limit;
     return { page, limit, size, offset };
 });

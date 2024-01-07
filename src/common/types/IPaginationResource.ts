@@ -1,6 +1,6 @@
 export type IPaginatedResource<T> = {
     totalItems: number;
-    items: T[];
+    data: T[];
     page: number;
     size: number;
 };

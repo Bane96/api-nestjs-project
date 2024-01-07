@@ -4,7 +4,6 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import {Home} from "../entity/home.entity";
 import {HomeController} from "./home.controller";
 import {HomeService} from "./home.service";
-import {PrimaryGeneratedColumn} from "typeorm";
 import {User} from "../entity/user.entity";
 
 @Module({
@@ -14,4 +13,3 @@ import {User} from "../entity/user.entity";
 })
 
 export class HomeModule {}
-

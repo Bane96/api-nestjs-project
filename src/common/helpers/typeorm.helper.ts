@@ -1,11 +1,11 @@
 import { IsNull, Not, LessThan, LessThanOrEqual, MoreThan, MoreThanOrEqual, ILike, In } from "typeorm";
-import {Filtering} from "../service/filter.service";
+import {IFiltering} from "../service/filter.service";
 import {FilterRule} from "../../enum/FilterRuleEnum";
 import {Sorting} from "../service/sorting.service";
 
 export const getOrder = (sort: Sorting) => sort ? { [sort.property]: sort.direction } : {};
 
-export const getWhere = (filter: Filtering) => {
+export const getWhere = (filter: IFiltering) => {
     if (!filter) return {};
 
     if (filter.rule == FilterRule.IS_NULL) return { [filter.property]: IsNull() };
