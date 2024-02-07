@@ -5,23 +5,23 @@ import {User} from '../entity/user.entity';
 import {Repository} from 'typeorm';
 import {UserRoleEnum} from "../enum/UserRoleEnum";
 import {UpdateUserDto} from "./dto/update-user.dto";
-import {FilterUserDto} from "./dto/filter-user";
 import {Pagination} from "../common/service/pagination.service";
 import {IFiltering} from "../common/service/filter.service";
 import {IPaginatedResource} from "../common/types/IPaginationResource";
 import {getOrder, getWhere} from "../common/helpers/typeorm.helper";
 import {Sorting} from "../common/service/sorting.service";
+import {Home} from "../entity/home.entity";
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectRepository(User) private userRepository: Repository<User>,
+        // @InjectRepository(Home) private homeRepository: Repository<Home>,
     ) {
     }
 
     async createUser(createUserDto: CreateUserDto) {
         const newUser = this.userRepository.create({
-            role: UserRoleEnum.USER,
             ...createUserDto,
             createdAt: new Date(),
         });
@@ -40,6 +40,7 @@ export class UserService {
             order,
             take: size,
             skip: offset,
+            relations: ['home']
         });
 
         return {
@@ -50,8 +51,8 @@ export class UserService {
         };
     }
 
-    findOne(id: number) {
-        return this.userRepository.findBy({id});
+    findOne(userId: number) {
+        return this.userRepository.findOne({where: {id: userId}});
     }
 
     update(id: number, updateUserDetails: UpdateUserDto) {

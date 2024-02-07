@@ -1,6 +1,5 @@
-import {Body, Controller, Get, Param, ParseIntPipe, Post} from "@nestjs/common";
+import {Body, Controller, Get, Post} from "@nestjs/common";
 import {HomeService} from "./home.service";
-import {CreateUserDto} from "../user/dto/create-user.dto";
 import {CreateHomeDto} from "./dto/home.dto";
 import {IPaginatedResource} from "../common/types/IPaginationResource";
 import {Home} from "../entity/home.entity";

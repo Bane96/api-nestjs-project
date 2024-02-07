@@ -8,7 +8,7 @@ import {
   Param,
   ParseIntPipe,
   Patch,
-  Post,
+  Post, UseGuards,
 } from "@nestjs/common";
 import {UserService} from './user.service';
 import {CreateUserDto} from './dto/create-user.dto';
@@ -18,6 +18,7 @@ import {Pagination, PaginationParams} from "../common/service/pagination.service
 import {IFiltering, FilteringParams} from "../common/service/filter.service";
 import {IPaginatedResource} from "../common/types/IPaginationResource";
 import {Sorting, SortingParams} from "../common/service/sorting.service";
+import {JwtAuthGuard} from "../auth/jwt.auth.guard";
 
 @Controller('users')
 export class UserController {
@@ -25,6 +26,7 @@ export class UserController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
   async findAllUsers(
     @PaginationParams() paginationParams: Pagination,
     @SortingParams([]) sort?: Sorting,

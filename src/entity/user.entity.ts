@@ -9,9 +9,6 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'enum', enum: UserRoleEnum, default: UserRoleEnum.USER })
-  role: UserRoleEnum;
-
   @Column()
   createdAt: Date;
 
