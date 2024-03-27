@@ -19,5 +19,4 @@ export class createAdminDto {
     @IsOptional()
     @ApiProperty()
     role: UserRoleEnum;
-
 }

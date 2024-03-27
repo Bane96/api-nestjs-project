@@ -19,6 +19,7 @@ import {IFiltering, FilteringParams} from "../common/service/filter.service";
 import {IPaginatedResource} from "../common/types/IPaginationResource";
 import {Sorting, SortingParams} from "../common/service/sorting.service";
 import {JwtAuthGuard} from "../auth/jwt.auth.guard";
+import {AuthGuard} from '@nestjs/passport';
 
 @Controller('users')
 export class UserController {

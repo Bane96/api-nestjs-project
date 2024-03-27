@@ -1,11 +1,10 @@
 import {PassportStrategy} from "@nestjs/passport";
-import {Strategy} from "passport-local";
-import {ExtractJwt} from "passport-jwt";
+import {ExtractJwt, Strategy} from "passport-jwt";
 import {JwtPayload} from "./dto/jwtPayload";
-import {UnauthorizedException} from "@nestjs/common";
+import {Injectable, UnauthorizedException} from "@nestjs/common";
 import {AdminService} from "../admin/admin.service";
 import {Admin} from "../entity/admin.entity";
-
+@Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor(private adminService: AdminService) {
         super({
@@ -17,7 +16,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     async validate(payload: JwtPayload): Promise<Admin> {
         const {username, id} = payload;
+        console.log('usao sam', username, id)
         const admin = await this.adminService.findByEmail(username);
+        console.log('ovdje nisam')
         if (!admin) {
             throw new UnauthorizedException();
         }

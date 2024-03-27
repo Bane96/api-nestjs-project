@@ -21,7 +21,8 @@ export class AdminService{
     findOne(id: number) {
         return this.adminRepository.findOne({where: {id: id}});
     }
-    findByEmail(email: string) {
+    findByEmail(email: string): Promise<Admin | null> {
+        console.log('ovdje u service sam usao')
         return this.adminRepository.findOne({where: {email: email}});
     }
 }

@@ -7,7 +7,6 @@ import {UserCredentialsDto} from "./dto/user-credentials.dto";
 @Controller()
 export class AuthController {
         constructor(private readonly authService: AuthService) {}
-    @UseGuards(LocalAuthGuard)
     @Post('login')
     async singIn(
         @Body(ValidationPipe) authCredentialsDto: UserCredentialsDto,
