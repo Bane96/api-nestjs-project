@@ -1,5 +1,4 @@
 import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
-import { UserRoleEnum } from '../enum/UserRoleEnum';
 import {Home} from "./home.entity";
 import {Exclude} from "class-transformer";
 
@@ -38,7 +37,7 @@ export class User {
   city: string;
 
   @Column({nullable: true})
-  homeNumber: number;
+  houseNumber: number;
 
   @Column({nullable: true})
   christianGlory: string;

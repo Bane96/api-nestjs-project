@@ -12,7 +12,7 @@ export class AuthController {
         @Body(ValidationPipe) authCredentialsDto: UserCredentialsDto,
     ): Promise<{
         token: string;
-        userData?: {
+        user?: {
             id: number;
             role: string;
             email: string;

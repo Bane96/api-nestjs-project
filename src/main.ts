@@ -9,14 +9,16 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   const config = new DocumentBuilder()
-      .setTitle('Cats example')
-      .setDescription('The cats API description')
+      .setTitle('Church project')
+      .setDescription('Church')
       .setVersion('1.0')
-      .addTag('cats')
+      .addTag('church')
+      .addServer('http://localhost:8000/', 'Local environment')
       .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(3000);
+  app.enableCors({ exposedHeaders: ['Content-Disposition'] });
+  await app.listen(process.env.SERVER_PORT);
 }
 bootstrap();

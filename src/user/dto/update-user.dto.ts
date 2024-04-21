@@ -3,13 +3,12 @@ import {Home} from "../../entity/home.entity";
 export class UpdateUserDto {
   firstName: string;
   lastName: string;
-  birthdate: Date;
-  password: string;
-  deadDate: Date;
-  weddingDate: Date;
+  birthdate: string;
+  deadDate: string;
+  weddingDate: string;
   gender: string;
   city: string;
-  homeNumber: number;
+  houseNumber: number;
   christianGlory: string;
   remark: string;
   home: Home;

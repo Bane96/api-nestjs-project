@@ -1,6 +1,6 @@
 import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {User} from "./user.entity";
-import {JoinColumn} from "typeorm/browser";
+import {IsOptional} from 'class-validator';
 
 @Entity({name: 'home'})
 export class Home {
@@ -10,14 +10,19 @@ export class Home {
     @Column()
     createdAt: Date;
 
-    @Column()
+    @Column({unique: true})
     name: string;
 
     @Column()
     city: string;
 
     @Column()
+    @IsOptional()
     street: string;
+
+    @Column()
+    @IsOptional()
+    streetNumber: string;
 
     @Column()
     about: string;

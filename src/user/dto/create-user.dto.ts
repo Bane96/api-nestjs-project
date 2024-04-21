@@ -36,7 +36,7 @@ export class CreateUserDto {
 
   @ApiProperty()
   @IsNumber()
-  homeNumber: number;
+  houseNumber: number;
 
   @ApiProperty()
   @IsString()

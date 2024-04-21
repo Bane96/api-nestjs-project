@@ -26,6 +26,5 @@ export const FilteringParams = createParamDecorator((data, ctx: ExecutionContext
     const [property, rule, value] = filter.split(':');
     if (!data.includes(property)) throw new BadRequestException(`Invalid filter property: ${property}`);
     if (!Object.values(FilterRule).includes(rule as FilterRule)) throw new BadRequestException(`Invalid filter rule: ${rule}`);
-    console.log(property, rule, value)
     return { property, rule, value };
 });
