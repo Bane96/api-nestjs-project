@@ -3,14 +3,11 @@ import {CreateUserDto} from './dto/create-user.dto';
 import {InjectRepository} from '@nestjs/typeorm';
 import {User} from '../entity/user.entity';
 import {Repository} from 'typeorm';
-import {UserRoleEnum} from "../enum/UserRoleEnum";
-import {UpdateUserDto} from "./dto/update-user.dto";
 import {Pagination} from "../common/service/pagination.service";
 import {IFiltering} from "../common/service/filter.service";
 import {IPaginatedResource} from "../common/types/IPaginationResource";
 import {getOrder, getWhere} from "../common/helpers/typeorm.helper";
 import {Sorting} from "../common/service/sorting.service";
-import {Home} from "../entity/home.entity";
 
 @Injectable()
 export class UserService {
@@ -30,10 +27,10 @@ export class UserService {
 
     async findAll(
         {page, limit, size, offset}: Pagination,
-        filter?: IFiltering,
+        filters?: IFiltering[],
         sort?: Sorting
     ): Promise<IPaginatedResource<Partial<User>>> {
-        const where = getWhere(filter);
+        const where = filters?.length ? getWhere(filters) : {};
         const order = getOrder(sort);
         const [users, total] = await this.userRepository.findAndCount({
             where,
@@ -52,7 +49,7 @@ export class UserService {
     }
 
     findOne(userId: number) {
-        return this.userRepository.findOne({where: {id: userId}});
+        return this.userRepository.findOne({where: {id: userId}, relations: ['home']});
     }
 
    async update(id: number, updateUserDetails: CreateUserDto): Promise<User> {

@@ -1,5 +1,7 @@
 export interface ICreateHome {
-    firstName: string;
-    lastName: string;
-    city: string
+    name: string;
+    city: string;
+    about: string;
+    streetNumber: string;
+    street: string;
 }

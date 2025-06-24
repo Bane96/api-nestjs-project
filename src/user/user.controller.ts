@@ -30,7 +30,7 @@ export class UserController {
   async findAllUsers(
     @PaginationParams() paginationParams: Pagination,
     @SortingParams([]) sort?: Sorting,
-    @FilteringParams(['firstName', 'id']) filter?: IFiltering
+    @FilteringParams(['firstName', 'id', 'lastName', 'gender', 'birthdate', 'weddingDate', 'deadDate']) filter?: IFiltering[]
   ): Promise<IPaginatedResource<Partial<User>>> {
     return await this.userService.findAll(paginationParams, filter);
   }

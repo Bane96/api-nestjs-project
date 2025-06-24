@@ -1,5 +1,5 @@
 import {ApiProperty} from "@nestjs/swagger";
-import {IsNumber, IsOptional, IsString} from "class-validator";
+import {IsBoolean, IsNumber, IsOptional, IsString} from "class-validator";
 import {Home} from "../../entity/home.entity";
 
 export class CreateUserDto {
@@ -26,9 +26,17 @@ export class CreateUserDto {
   @IsOptional()
   weddingDate: Date;
 
+  @ApiProperty({ pattern: '2021-12-30', example: '2021-12-30' })
+  @IsOptional()
+  christeningDate: Date;
+
   @ApiProperty()
   @IsString()
   gender: string;
+
+  @ApiProperty()
+  @IsString()
+  bookInfo: string;
 
   @ApiProperty()
   @IsString()
@@ -45,6 +53,18 @@ export class CreateUserDto {
   @ApiProperty()
   @IsString()
   remark: string;
+
+  @ApiProperty()
+  @IsString()
+  motherName: string;
+
+  @ApiProperty()
+  @IsString()
+  fatherName: string;
+
+  @ApiProperty()
+  @IsBoolean()
+  isActive: boolean;
 
   @ApiProperty()
   @IsOptional()
