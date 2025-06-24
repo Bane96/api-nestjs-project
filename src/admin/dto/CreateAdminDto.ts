@@ -4,6 +4,7 @@ import {UserRoleEnum} from "../../enum/UserRoleEnum";
 
 export class createAdminDto {
     @ApiProperty()
+    @IsOptional()
     @IsString()
     @MinLength(8)
     @MaxLength(50)
