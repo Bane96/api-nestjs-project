@@ -1,6 +1,7 @@
 import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {User} from "./user.entity";
 import {IsOptional} from 'class-validator';
+import {CityEnum} from '../enum/CityEnum';
 
 @Entity({name: 'home'})
 export class Home {
@@ -14,7 +15,7 @@ export class Home {
     name: string;
 
     @Column()
-    city: string;
+    city: CityEnum;
 
     @Column()
     @IsOptional()

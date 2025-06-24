@@ -1,5 +1,6 @@
 import {ApiProperty} from "@nestjs/swagger";
-import {IsOptional, IsString} from "class-validator";
+import {IsString} from "class-validator";
+import {CityEnum} from '../../enum/CityEnum';
 
 export class CreateHomeDto {
     @ApiProperty()
@@ -20,5 +21,5 @@ export class CreateHomeDto {
 
     @ApiProperty()
     @IsString()
-    city: string;
+    city: CityEnum;
 }
