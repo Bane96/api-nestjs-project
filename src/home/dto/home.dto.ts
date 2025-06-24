@@ -4,11 +4,19 @@ import {IsOptional, IsString} from "class-validator";
 export class CreateHomeDto {
     @ApiProperty()
     @IsString()
-    firstName: string;
+    name: string;
 
     @ApiProperty()
     @IsString()
-    lastName: string;
+    about: string;
+
+    @ApiProperty()
+    @IsString()
+    street: string;
+
+    @ApiProperty()
+    @IsString()
+    streetNumber: string;
 
     @ApiProperty()
     @IsString()

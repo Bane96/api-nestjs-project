@@ -9,6 +9,7 @@ import {Pagination} from "../common/service/pagination.service";
 import {IFiltering} from "../common/service/filter.service";
 import {Sorting} from "../common/service/sorting.service";
 import {getOrder, getWhere} from "../common/helpers/typeorm.helper";
+import {CreateHomeDto} from './dto/home.dto';
 
 @Injectable()
 export class HomeService {
@@ -18,16 +19,17 @@ export class HomeService {
     ) {}
     async findAll(
         {page, limit, size, offset}: Pagination,
-        filter?: IFiltering,
+        filters?: IFiltering[],
         sort?: Sorting
     ):Promise<IPaginatedResource<Partial<Home>>> {
-        const where = getWhere(filter);
+        const where = filters?.length ? getWhere(filters) : {};
         const order = getOrder(sort);
         const [users, total] = await this.homeRepository.findAndCount({
             where,
             order,
             take: size,
             skip: offset,
+            relations:['users']
         });
         return {
             totalItems: total,
@@ -43,5 +45,23 @@ export class HomeService {
             ...createHome
         })
         return await this.homeRepository.save(newHome);
+    }
+
+    async findOne(id: number): Promise<Home> {
+        return await this.homeRepository.findOne({
+            where: { id: id },
+            relations: ['users']
+        });
+    }
+    async update(id: number, updateHomeDetails: CreateHomeDto): Promise<Home> {
+        await this.homeRepository.update(id, updateHomeDetails);
+        return await this.homeRepository.findOne({
+            where: { id: id },
+            relations: ['users']
+        });
+    }
+
+        async remove(id: number) {
+        return await this.homeRepository.delete({id});
     }
 }
