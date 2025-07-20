@@ -7,7 +7,7 @@ import {
     Body,
     HttpStatus,
     HttpCode,
-    Req,
+    Req, Delete, Param, NotFoundException, BadRequestException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -38,6 +38,9 @@ export class PhotoController {
         @Req() req: Request,
         @Body('description') description?: string,
     ) {
+        if (!file) {
+            throw new BadRequestException('No file uploaded');
+        }
         const filePath = `/uploads/photos/${file.filename}`;
         const photo = await this.photoService.uploadPhoto(filePath, description);
 
@@ -62,4 +65,14 @@ export class PhotoController {
             url: `${baseUrl}${photo.url.startsWith('/') ? '' : '/'}${photo.url}`,
         }));
     }
+
+    @Delete('delete/:id')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    async deletePhoto(@Param('id') id: number) {
+        const deleted = await this.photoService.deletePhoto(id);
+        if (!deleted) {
+            throw new NotFoundException(`Photo with id ${id} not found`);
+        }
+    }
+
 }
