@@ -8,9 +8,10 @@ import {HomeModule} from "./home/home.module";
 import { AuthModule } from './auth/auth.module';
 import {AdminModule} from "./admin/admin.module";
 import {PhotoModule} from './gallery/photo.module';
+import {DocumentModule} from './documents/document.module';
 
 @Module({
-  imports: [UserModule, HomeModule, AuthModule, AdminModule, PhotoModule, TypeOrmModule.forRoot(TypeormConfig)],
+  imports: [UserModule, HomeModule, AuthModule, AdminModule, PhotoModule, DocumentModule, TypeOrmModule.forRoot(TypeormConfig)],
   controllers: [AppController],
   providers: [AppService],
 })
