@@ -10,6 +10,7 @@ import {IFiltering} from "../common/service/filter.service";
 import {Sorting} from "../common/service/sorting.service";
 import {getOrder, getWhere} from "../common/helpers/typeorm.helper";
 import {CreateHomeDto} from './dto/home.dto';
+import {CityEnum} from '../enum/CityEnum';
 
 @Injectable()
 export class HomeService {
@@ -63,5 +64,29 @@ export class HomeService {
 
         async remove(id: number) {
         return await this.homeRepository.delete({id});
+    }
+    async countUsersByCity(city: CityEnum): Promise<number> {
+        return await this.userRepository
+            .createQueryBuilder("user")
+            .innerJoin("user.home", "home")
+            .where("home.city = :city", { city })
+            .andWhere("user.isActive = :isActive", { isActive: true })
+            .getCount();
+    }
+
+    async countUsersByCityAll(): Promise<{ city: CityEnum; userCount: number }[]> {
+        const rows = await this.userRepository
+            .createQueryBuilder("user")
+            .innerJoin("user.home", "home")
+            .where("user.isActive = :isActive", { isActive: true })
+            .select("home.city", "city")
+            .addSelect("COUNT(user.id)", "userCount")
+            .groupBy("home.city")
+            .getRawMany<{ city: CityEnum; userCount: string }>();
+
+        return rows.map((r) => ({
+            city: r.city,
+            userCount: Number(r.userCount),
+        }));
     }
 }

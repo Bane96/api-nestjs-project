@@ -42,6 +42,5 @@ export const FilteringParams = createParamDecorator((data, ctx: ExecutionContext
 
         return { property, rule: rule as FilterRule, value };
     });
-    console.log(result);
     return result;
 });
