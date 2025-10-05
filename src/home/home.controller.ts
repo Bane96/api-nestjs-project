@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards} from "@nestjs/common";
+import {Body, Controller, Delete, Get, Param, ParseEnumPipe, ParseIntPipe, Post, Put, UseGuards} from "@nestjs/common";
 import {HomeService} from "./home.service";
 import {CreateHomeDto} from "./dto/home.dto";
 import {IPaginatedResource} from "../common/types/IPaginationResource";
@@ -7,6 +7,7 @@ import {Pagination, PaginationParams} from "../common/service/pagination.service
 import {Sorting, SortingParams} from "../common/service/sorting.service";
 import {IFiltering, FilteringParams} from "../common/service/filter.service";
 import {JwtAuthGuard} from "../auth/jwt.auth.guard";
+import {CityEnum} from '../enum/CityEnum';
 
 @Controller('home')
 @UseGuards(JwtAuthGuard)
@@ -42,4 +43,17 @@ export class HomeController {
     async removeUser(@Param('id', ParseIntPipe) id: number) {
         return this.homeService.remove(id);
     }
+    @Get("stats/users-by-city/:city")
+    async getUsersCountByCity(
+        @Param("city", new ParseEnumPipe(CityEnum)) city: CityEnum
+    ): Promise<{ city: CityEnum; userCount: number }> {
+        const userCount = await this.homeService.countUsersByCity(city);
+        return { city, userCount };
+    }
+
+    @Get("stats/users-by-city")
+    async getUsersCountByCityAll(): Promise<{ city: CityEnum; userCount: number }[]> {
+        return this.homeService.countUsersByCityAll();
+    }
+
 }
